@@ -10,7 +10,7 @@ interface SpotlightTextProps {
 export function SpotlightText({
   text,
   className = '',
-  spotlightColor = '#6ee7b7',
+  spotlightColor: _spotlightColor = '#6ee7b7',
   spotlightRadius = 15
 }: SpotlightTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null);

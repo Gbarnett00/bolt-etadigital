@@ -3,26 +3,7 @@ interface LogoProps {
   variant?: 'default' | 'light' | 'dark';
 }
 
-export function Logo({ className = '', variant = 'default' }: LogoProps) {
-  const colors = {
-    default: {
-      primary: '#10b981',
-      secondary: '#059669',
-      text: '#f8fafc',
-    },
-    light: {
-      primary: '#10b981',
-      secondary: '#059669',
-      text: '#0f172a',
-    },
-    dark: {
-      primary: '#10b981',
-      secondary: '#059669',
-      text: '#f8fafc',
-    },
-  };
-
-  const { primary, secondary, text } = colors[variant];
+export function Logo({ className = '', variant: _variant = 'default' }: LogoProps) {
 
   return (
     <svg

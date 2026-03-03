@@ -21,7 +21,7 @@ export function DownloadGuide() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [pageViews, setPageViews] = useState(0);
+  const [, setPageViews] = useState(0);
 
   useEffect(() => {
     const trackPageView = async () => {

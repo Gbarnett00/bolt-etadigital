@@ -16,7 +16,6 @@ const principleIcons = {
 };
 
 export function About() {
-  const titleAnim = useAdvancedScrollAnimation({ direction: 'fade' });
   const [imageSettings, setImageSettings] = useState<ImageSettings>({ zoom: 1, offsetX: 0, offsetY: 0 });
 
   useEffect(() => {
