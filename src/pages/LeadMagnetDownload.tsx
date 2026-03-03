@@ -19,7 +19,7 @@ export function LeadMagnetDownload() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [pageViews, setPageViews] = useState(0);
+  const [, setPageViews] = useState(0);
 
   const titleAnim = useAdvancedScrollAnimation({ direction: 'fade' });
   const card1Anim = useAdvancedScrollAnimation({ direction: 'scale', scale: 0.9 });
