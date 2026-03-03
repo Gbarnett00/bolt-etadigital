@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Image Generator - ETA Digital</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+        .canvas-container {
+            margin: 2rem 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 1px solid #e2e8f0;
+            max-width: 100%;
+        }
+        button {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        h2 {
+            color: #1e293b;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>ETA Digital - OG Image Generator</h1>
+    <p>Click each button to generate and download the Open Graph images for your pages.</p>
+
+    <div class="canvas-container">
+        <h2>Free Automations</h2>
+        <canvas id="canvas1" width="1200" height="630"></canvas>
+        <br><br>
+        <button onclick="generateImage1()">Generate Image</button>
+        <button onclick="downloadImage('canvas1', 'og-free-automations.jpg')">Download</button>
+    </div>
+
+    <div class="canvas-container">
+        <h2>Case Study</h2>
+        <canvas id="canvas2" width="1200" height="630"></canvas>
+        <br><br>
+        <button onclick="generateImage2()">Generate Image</button>
+        <button onclick="downloadImage('canvas2', 'og-case-study.jpg')">Download</button>
+    </div>
+
+    <div class="canvas-container">
+        <h2>Free Guide</h2>
+        <canvas id="canvas3" width="1200" height="630"></canvas>
+        <br><br>
+        <button onclick="generateImage3()">Generate Image</button>
+        <button onclick="downloadImage('canvas3', 'og-free-guide.jpg')">Download</button>
+    </div>
+
+    <script>
+        function generateImage1() {
+            const canvas = document.getElementById('canvas1');
+            const ctx = canvas.getContext('2d');
+
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#0ea5e9');
+            gradient.addColorStop(1, '#2563eb');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // White overlay pattern
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            for (let i = 0; i < 20; i++) {
+                ctx.fillRect(i * 80, 0, 40, 630);
+            }
+
+            // Main heading
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 72px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText('7 Free Cost Saving', 600, 240);
+            ctx.fillText('Automations', 600, 330);
+
+            // Subheading
+            ctx.font = '36px system-ui';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Quick wins for SMEs in the next 30 days', 600, 410);
+
+            // Logo/Brand
+            ctx.font = 'bold 32px system-ui';
+            ctx.fillStyle = 'white';
+            ctx.fillText('ETA Digital', 600, 520);
+        }
+
+        function generateImage2() {
+            const canvas = document.getElementById('canvas2');
+            const ctx = canvas.getContext('2d');
+
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#10b981');
+            gradient.addColorStop(1, '#059669');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // White overlay pattern
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            for (let i = 0; i < 20; i++) {
+                ctx.fillRect(i * 80, 0, 40, 630);
+            }
+
+            // Case Study badge
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.fillRect(450, 120, 300, 50);
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 28px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText('CASE STUDY', 600, 155);
+
+            // Main heading
+            ctx.font = 'bold 64px system-ui';
+            ctx.fillText('GroundTech', 600, 260);
+
+            // Subheading
+            ctx.font = 'bold 56px system-ui';
+            ctx.fillStyle = '#fbbf24';
+            ctx.fillText('60% Admin Reduction', 600, 350);
+
+            // Description
+            ctx.font = '32px system-ui';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('How we automated operations', 600, 430);
+            ctx.fillText('and saved 15 hours per week', 600, 475);
+
+            // Logo/Brand
+            ctx.font = 'bold 32px system-ui';
+            ctx.fillStyle = 'white';
+            ctx.fillText('ETA Digital', 600, 560);
+        }
+
+        function generateImage3() {
+            const canvas = document.getElementById('canvas3');
+            const ctx = canvas.getContext('2d');
+
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#8b5cf6');
+            gradient.addColorStop(1, '#6366f1');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // White overlay pattern
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+            for (let i = 0; i < 20; i++) {
+                ctx.fillRect(i * 80, 0, 40, 630);
+            }
+
+            // Free badge
+            ctx.fillStyle = '#fbbf24';
+            ctx.fillRect(480, 100, 240, 60);
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 36px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText('FREE GUIDE', 600, 145);
+
+            // Main heading
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 68px system-ui';
+            ctx.fillText('14 Common Mistakes', 600, 260);
+            ctx.fillText('with AI Automation', 600, 340);
+
+            // Subheading
+            ctx.font = '36px system-ui';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('And how to avoid them', 600, 420);
+
+            // Logo/Brand
+            ctx.font = 'bold 32px system-ui';
+            ctx.fillStyle = 'white';
+            ctx.fillText('ETA Digital', 600, 540);
+        }
+
+        function downloadImage(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+        }
+
+        // Auto-generate all images on load
+        window.onload = function() {
+            generateImage1();
+            generateImage2();
+            generateImage3();
+        };
+    </script>
+</body>
+</html>

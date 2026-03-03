@@ -1,0 +1,7 @@
+# Serve static HTML pages with meta tags for social media crawlers
+/free-guide  /free-guide.html  200
+/case-study  /case-study.html  200
+/free-automations  /free-automations.html  200
+
+# SPA fallback - serve index.html for all other routes
+/*    /index.html   200
