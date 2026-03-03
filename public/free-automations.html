@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Only redirect bots -->
     <script>
         (function() {
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            var isBot = /bot|crawler|spider|crawling|facebook|twitter|linkedin|whatsapp|slackbot|telegram|facebot|twitterbot|rogerbot|linkedinbot|embedly|quora|showyoubot|outbrain|pinterest|developers\.google\.com/i.test(userAgent);
-            if (isBot) {
+            var isBot = /linkedinbot|facebookexternalhit|twitterbot|slackbot|rogerbot|embedly|quora|showyoubot|outbrain|pinterestbot|bot|crawler|spider|crawling|developers\.google\.com/i.test(userAgent);
+            if (!isBot) {
                 window.location.replace('/?app-route=/free-automations');
             }
         })();
