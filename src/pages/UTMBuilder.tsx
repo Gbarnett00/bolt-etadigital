@@ -125,11 +125,11 @@ export function UTMBuilder() {
               <Link className="w-5 h-5 text-accent-500" />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-100">
-              LinkedIn Link Generator
+              Post & Comment Link Generator
             </h1>
           </div>
           <p className="text-gray-600 dark:text-dark-400">
-            Generate a tracking link for your LinkedIn featured section. Each link shows up separately in analytics so you can see exactly which post drove clicks.
+            Generate a tracked link to paste into a LinkedIn post or comment. Give it a name, copy it, and use it — each link shows up separately in analytics so you can see exactly which one drove clicks.
           </p>
         </div>
 
