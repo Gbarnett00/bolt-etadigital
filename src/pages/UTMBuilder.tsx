@@ -179,16 +179,16 @@ export function UTMBuilder() {
           </div>
         </Card>
 
-        {/* History */}
-        {history.length > 0 && (
-          <Card>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <h2 className="text-sm font-semibold text-gray-700 dark:text-dark-300">
-                  Previously generated
-                </h2>
-              </div>
+        {/* History — always visible */}
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-gray-400" />
+              <h2 className="text-sm font-semibold text-gray-700 dark:text-dark-300">
+                Generated links
+              </h2>
+            </div>
+            {history.length > 0 && (
               <button
                 onClick={handleClearHistory}
                 className="text-xs text-gray-400 hover:text-red-400 transition-colors flex items-center gap-1"
@@ -196,8 +196,14 @@ export function UTMBuilder() {
                 <Trash2 className="w-3 h-3" />
                 Clear all
               </button>
-            </div>
+            )}
+          </div>
 
+          {history.length === 0 ? (
+            <p className="text-sm text-gray-400 dark:text-dark-500 italic py-2">
+              Links you generate will appear here. You can copy or delete them any time.
+            </p>
+          ) : (
             <div className="space-y-0">
               {history.map((entry, i) => (
                 <div
@@ -239,8 +245,8 @@ export function UTMBuilder() {
                 </div>
               ))}
             </div>
-          </Card>
-        )}
+          )}
+        </Card>
 
       </div>
     </Section>
