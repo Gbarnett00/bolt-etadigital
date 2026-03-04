@@ -10,6 +10,7 @@ import { WhatsAppRedirect } from './pages/WhatsAppRedirect';
 import { CaseStudy } from './pages/CaseStudy';
 import { AutomationChallenge } from './pages/AutomationChallenge';
 import Quiz from './pages/Quiz';
+import { UTMBuilder } from './pages/UTMBuilder';
 import { useEffect } from 'react';
 import { trackPageView } from './lib/analytics';
 
@@ -45,6 +46,7 @@ function AppRoutes() {
           <Route path="/automation-challenge" element={<AutomationChallenge />} />
           <Route path="/chat" element={<WhatsAppRedirect />} />
           <Route path="/quiz" element={<Quiz />} />
+          <Route path="/utm-builder" element={<UTMBuilder />} />
         </Routes>
       </Layout>
     </div>
