@@ -15,6 +15,7 @@ interface HistoryEntry {
 }
 
 const PAGES = [
+  { value: '', label: 'Home Page' },
   { value: 'case-study', label: 'Case Study' },
   { value: 'free-guide', label: 'Free Guide' },
   { value: 'free-automations', label: 'Free Automations' },
@@ -59,7 +60,7 @@ export function UTMBuilder() {
   const isValid = campaignSlug.length > 0;
 
   const generatedUrl = isValid
-    ? `${BASE_URL}/${page}?utm_source=linkedin&utm_medium=profile&utm_campaign=${campaignSlug}`
+    ? `${BASE_URL}${page ? '/' + page : ''}?utm_source=linkedin&utm_medium=profile&utm_campaign=${campaignSlug}`
     : '';
 
   const saveToHistory = (url: string) => {
