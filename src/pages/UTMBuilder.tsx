@@ -19,6 +19,7 @@ const PAGES = [
   { value: 'case-study', label: 'Case Study' },
   { value: 'free-guide', label: 'Free Guide' },
   { value: 'free-automations', label: 'Free Automations' },
+  { value: 'quiz', label: 'Efficiency Quiz' },
 ];
 
 const PLACEMENTS = [
@@ -99,6 +100,16 @@ export function UTMBuilder() {
     await navigator.clipboard.writeText(entry.url);
     setCopiedId(entry.id);
     setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleDeleteEntry = (id: string) => {
+    const updated = history.filter(e => e.id !== id);
+    setHistory(updated);
+    if (updated.length === 0) {
+      localStorage.removeItem(HISTORY_KEY);
+    } else {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
+    }
   };
 
   const handleClearHistory = () => {
@@ -229,16 +240,25 @@ export function UTMBuilder() {
                       {formatDate(entry.timestamp)}
                     </p>
                   </div>
-                  <button
-                    onClick={() => handleCopyHistory(entry)}
-                    className="shrink-0 p-2 rounded-lg text-gray-400 hover:text-accent-500 hover:bg-accent-500/10 transition-all"
-                    title="Copy link"
-                  >
-                    {copiedId === entry.id
-                      ? <CheckCircle className="w-4 h-4 text-accent-500" />
-                      : <Copy className="w-4 h-4" />
-                    }
-                  </button>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      onClick={() => handleCopyHistory(entry)}
+                      className="p-2 rounded-lg text-gray-400 hover:text-accent-500 hover:bg-accent-500/10 transition-all"
+                      title="Copy link"
+                    >
+                      {copiedId === entry.id
+                        ? <CheckCircle className="w-4 h-4 text-accent-500" />
+                        : <Copy className="w-4 h-4" />
+                      }
+                    </button>
+                    <button
+                      onClick={() => handleDeleteEntry(entry.id)}
+                      className="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
