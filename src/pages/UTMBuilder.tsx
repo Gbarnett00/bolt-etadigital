@@ -10,7 +10,6 @@ interface HistoryEntry {
   id: string;
   timestamp: string;
   page: string;
-  placement: string;
   campaignName: string;
   url: string;
 }
@@ -20,14 +19,6 @@ const PAGES = [
   { value: 'free-guide', label: 'Free Guide' },
   { value: 'free-automations', label: 'Free Automations' },
   { value: 'quiz', label: 'Efficiency Quiz' },
-];
-
-const PLACEMENTS = [
-  { value: 'post', label: 'Post', medium: 'social' },
-  { value: 'featured', label: 'Featured Section', medium: 'profile' },
-  { value: 'bio', label: 'Profile Bio', medium: 'profile' },
-  { value: 'article', label: 'Article', medium: 'social' },
-  { value: 'comment', label: 'Comment', medium: 'social' },
 ];
 
 const BASE_URL = 'https://etadigital.co.uk';
@@ -40,7 +31,6 @@ function slugify(text: string): string {
 
 export function UTMBuilder() {
   const [page, setPage] = useState('case-study');
-  const [placement, setPlacement] = useState('post');
   const [campaignName, setCampaignName] = useState('');
   const [copied, setCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -65,13 +55,11 @@ export function UTMBuilder() {
     }
   }, []);
 
-  const placementData = PLACEMENTS.find(p => p.value === placement) || PLACEMENTS[0];
   const campaignSlug = slugify(campaignName);
   const isValid = campaignSlug.length > 0;
-  const fullCampaign = `${placement}_${campaignSlug}`;
 
   const generatedUrl = isValid
-    ? `${BASE_URL}/${page}?utm_source=linkedin&utm_medium=${placementData.medium}&utm_campaign=${fullCampaign}`
+    ? `${BASE_URL}/${page}?utm_source=linkedin&utm_medium=profile&utm_campaign=${campaignSlug}`
     : '';
 
   const saveToHistory = (url: string) => {
@@ -79,7 +67,6 @@ export function UTMBuilder() {
       id: Date.now().toString(),
       timestamp: new Date().toISOString(),
       page: PAGES.find(p => p.value === page)?.label ?? page,
-      placement: placementData.label,
       campaignName,
       url,
     };
@@ -142,7 +129,7 @@ export function UTMBuilder() {
             </h1>
           </div>
           <p className="text-gray-600 dark:text-dark-400">
-            Generate a tracking link for your LinkedIn post. Each link tells us exactly where your clicks came from so we can see what's working.
+            Generate a tracking link for your LinkedIn featured section. Each link shows up separately in analytics so you can see exactly which post drove clicks.
           </p>
         </div>
 
@@ -154,13 +141,6 @@ export function UTMBuilder() {
               value={page}
               onChange={e => setPage(e.target.value)}
               options={PAGES}
-            />
-
-            <Select
-              label="Where on LinkedIn will this link appear?"
-              value={placement}
-              onChange={e => setPlacement(e.target.value)}
-              options={PLACEMENTS.map(p => ({ value: p.value, label: p.label }))}
             />
 
             <Input
@@ -225,12 +205,9 @@ export function UTMBuilder() {
                   className={`flex items-start justify-between gap-3 py-3 ${i > 0 ? 'border-t border-gray-100 dark:border-dark-800' : ''}`}
                 >
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs font-medium bg-accent-500/10 text-accent-600 dark:text-accent-400 px-2 py-0.5 rounded">
                         {entry.page}
-                      </span>
-                      <span className="text-xs text-gray-500 dark:text-dark-500">
-                        {entry.placement}
                       </span>
                     </div>
                     <p className="text-sm font-medium text-gray-800 dark:text-dark-200 truncate">
