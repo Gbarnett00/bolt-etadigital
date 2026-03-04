@@ -10,7 +10,6 @@ interface HistoryEntry {
   id: string;
   timestamp: string;
   page: string;
-  placement: string;
   campaignName: string;
   url: string;
 }
@@ -19,14 +18,7 @@ const PAGES = [
   { value: 'case-study', label: 'Case Study' },
   { value: 'free-guide', label: 'Free Guide' },
   { value: 'free-automations', label: 'Free Automations' },
-];
-
-const PLACEMENTS = [
-  { value: 'post', label: 'Post', medium: 'social' },
-  { value: 'featured', label: 'Featured Section', medium: 'profile' },
-  { value: 'bio', label: 'Profile Bio', medium: 'profile' },
-  { value: 'article', label: 'Article', medium: 'social' },
-  { value: 'comment', label: 'Comment', medium: 'social' },
+  { value: 'quiz', label: 'Efficiency Quiz' },
 ];
 
 const BASE_URL = 'https://etadigital.co.uk';
@@ -39,7 +31,6 @@ function slugify(text: string): string {
 
 export function UTMBuilder() {
   const [page, setPage] = useState('case-study');
-  const [placement, setPlacement] = useState('post');
   const [campaignName, setCampaignName] = useState('');
   const [copied, setCopied] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -64,13 +55,11 @@ export function UTMBuilder() {
     }
   }, []);
 
-  const placementData = PLACEMENTS.find(p => p.value === placement) || PLACEMENTS[0];
   const campaignSlug = slugify(campaignName);
   const isValid = campaignSlug.length > 0;
-  const fullCampaign = `${placement}_${campaignSlug}`;
 
   const generatedUrl = isValid
-    ? `${BASE_URL}/${page}?utm_source=linkedin&utm_medium=${placementData.medium}&utm_campaign=${fullCampaign}`
+    ? `${BASE_URL}/${page}?utm_source=linkedin&utm_medium=profile&utm_campaign=${campaignSlug}`
     : '';
 
   const saveToHistory = (url: string) => {
@@ -78,7 +67,6 @@ export function UTMBuilder() {
       id: Date.now().toString(),
       timestamp: new Date().toISOString(),
       page: PAGES.find(p => p.value === page)?.label ?? page,
-      placement: placementData.label,
       campaignName,
       url,
     };
@@ -99,6 +87,16 @@ export function UTMBuilder() {
     await navigator.clipboard.writeText(entry.url);
     setCopiedId(entry.id);
     setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleDeleteEntry = (id: string) => {
+    const updated = history.filter(e => e.id !== id);
+    setHistory(updated);
+    if (updated.length === 0) {
+      localStorage.removeItem(HISTORY_KEY);
+    } else {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(updated));
+    }
   };
 
   const handleClearHistory = () => {
@@ -127,11 +125,11 @@ export function UTMBuilder() {
               <Link className="w-5 h-5 text-accent-500" />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-100">
-              LinkedIn Link Generator
+              Post & Comment Tracking Link Generator
             </h1>
           </div>
           <p className="text-gray-600 dark:text-dark-400">
-            Generate a tracking link for your LinkedIn post. Each link tells us exactly where your clicks came from so we can see what's working.
+            Pick a page, give the link a name, then click <strong>Generate & Copy</strong> — the link is copied to your clipboard and saved below so you can find it again later.
           </p>
         </div>
 
@@ -143,13 +141,6 @@ export function UTMBuilder() {
               value={page}
               onChange={e => setPage(e.target.value)}
               options={PAGES}
-            />
-
-            <Select
-              label="Where on LinkedIn will this link appear?"
-              value={placement}
-              onChange={e => setPlacement(e.target.value)}
-              options={PLACEMENTS.map(p => ({ value: p.value, label: p.label }))}
             />
 
             <Input
@@ -181,23 +172,23 @@ export function UTMBuilder() {
               >
                 {copied
                   ? <><CheckCircle className="w-4 h-4" />Copied!</>
-                  : <><Copy className="w-4 h-4" />Copy</>
+                  : <><Copy className="w-4 h-4" />Generate & Copy</>
                 }
               </Button>
             </div>
           </div>
         </Card>
 
-        {/* History */}
-        {history.length > 0 && (
-          <Card>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <h2 className="text-sm font-semibold text-gray-700 dark:text-dark-300">
-                  Previously generated
-                </h2>
-              </div>
+        {/* History — always visible */}
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-gray-400" />
+              <h2 className="text-sm font-semibold text-gray-700 dark:text-dark-300">
+                Generated links
+              </h2>
+            </div>
+            {history.length > 0 && (
               <button
                 onClick={handleClearHistory}
                 className="text-xs text-gray-400 hover:text-red-400 transition-colors flex items-center gap-1"
@@ -205,8 +196,14 @@ export function UTMBuilder() {
                 <Trash2 className="w-3 h-3" />
                 Clear all
               </button>
-            </div>
+            )}
+          </div>
 
+          {history.length === 0 ? (
+            <p className="text-sm text-gray-400 dark:text-dark-500 italic py-2">
+              Links you generate will appear here. You can copy or delete them any time.
+            </p>
+          ) : (
             <div className="space-y-0">
               {history.map((entry, i) => (
                 <div
@@ -214,12 +211,9 @@ export function UTMBuilder() {
                   className={`flex items-start justify-between gap-3 py-3 ${i > 0 ? 'border-t border-gray-100 dark:border-dark-800' : ''}`}
                 >
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs font-medium bg-accent-500/10 text-accent-600 dark:text-accent-400 px-2 py-0.5 rounded">
                         {entry.page}
-                      </span>
-                      <span className="text-xs text-gray-500 dark:text-dark-500">
-                        {entry.placement}
                       </span>
                     </div>
                     <p className="text-sm font-medium text-gray-800 dark:text-dark-200 truncate">
@@ -229,21 +223,30 @@ export function UTMBuilder() {
                       {formatDate(entry.timestamp)}
                     </p>
                   </div>
-                  <button
-                    onClick={() => handleCopyHistory(entry)}
-                    className="shrink-0 p-2 rounded-lg text-gray-400 hover:text-accent-500 hover:bg-accent-500/10 transition-all"
-                    title="Copy link"
-                  >
-                    {copiedId === entry.id
-                      ? <CheckCircle className="w-4 h-4 text-accent-500" />
-                      : <Copy className="w-4 h-4" />
-                    }
-                  </button>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      onClick={() => handleCopyHistory(entry)}
+                      className="p-2 rounded-lg text-gray-400 hover:text-accent-500 hover:bg-accent-500/10 transition-all"
+                      title="Copy link"
+                    >
+                      {copiedId === entry.id
+                        ? <CheckCircle className="w-4 h-4 text-accent-500" />
+                        : <Copy className="w-4 h-4" />
+                      }
+                    </button>
+                    <button
+                      onClick={() => handleDeleteEntry(entry.id)}
+                      className="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
-          </Card>
-        )}
+          )}
+        </Card>
 
       </div>
     </Section>
