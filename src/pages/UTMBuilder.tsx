@@ -125,11 +125,11 @@ export function UTMBuilder() {
               <Link className="w-5 h-5 text-accent-500" />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-dark-100">
-              Post & Comment Link Generator
+              Post & Comment Tracking Link Generator
             </h1>
           </div>
           <p className="text-gray-600 dark:text-dark-400">
-            Generate a tracked link to paste into a LinkedIn post or comment. Give it a name, copy it, and use it — each link shows up separately in analytics so you can see exactly which one drove clicks.
+            Pick a page, give the link a name, then click <strong>Generate & Copy</strong> — the link is copied to your clipboard and saved below so you can find it again later.
           </p>
         </div>
 
@@ -172,7 +172,7 @@ export function UTMBuilder() {
               >
                 {copied
                   ? <><CheckCircle className="w-4 h-4" />Copied!</>
-                  : <><Copy className="w-4 h-4" />Copy</>
+                  : <><Copy className="w-4 h-4" />Generate & Copy</>
                 }
               </Button>
             </div>
