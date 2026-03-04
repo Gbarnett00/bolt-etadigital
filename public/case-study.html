@@ -9,7 +9,9 @@
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
             var isBot = /linkedinbot|facebookexternalhit|twitterbot|slackbot|rogerbot|embedly|quora|showyoubot|outbrain|pinterestbot|bot|crawler|spider|crawling|developers\.google\.com/i.test(userAgent);
             if (!isBot) {
-                window.location.replace('/?app-route=/case-study');
+                var params = new URLSearchParams(window.location.search);
+                params.set('app-route', '/case-study');
+                window.location.replace('/?' + params.toString());
             }
         })();
     </script>
