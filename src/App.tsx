@@ -31,6 +31,11 @@ function AppRoutes() {
       params.delete('app-route');
       const remainingParams = params.toString();
       const targetUrl = appRoute + (remainingParams ? '?' + remainingParams : '');
+      console.log('[UTM Debug] app-route detected');
+      console.log('[UTM Debug] navigating to:', targetUrl);
+      console.log('[UTM Debug] utm_source:', params.get('utm_source'));
+      console.log('[UTM Debug] utm_medium:', params.get('utm_medium'));
+      console.log('[UTM Debug] utm_campaign:', params.get('utm_campaign'));
       window.history.replaceState({}, '', targetUrl);
       navigate(targetUrl, { replace: true });
     }
