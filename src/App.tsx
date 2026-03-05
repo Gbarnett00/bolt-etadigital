@@ -27,8 +27,12 @@ function AppRoutes() {
     const appRoute = params.get('app-route');
 
     if (appRoute) {
-      window.history.replaceState({}, '', appRoute);
-      navigate(appRoute, { replace: true });
+      // Remove app-route but keep all UTM params so GA4 can read them
+      params.delete('app-route');
+      const remainingParams = params.toString();
+      const targetUrl = appRoute + (remainingParams ? '?' + remainingParams : '');
+      window.history.replaceState({}, '', targetUrl);
+      navigate(targetUrl, { replace: true });
     }
   }, [navigate]);
 
