@@ -19,6 +19,9 @@ function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
+    // Skip the intermediate /?app-route=... URL — it's a redirect artifact, not a real page.
+    // The location useEffect will fire again with the clean URL after navigate() resolves.
+    if (location.search.includes('app-route=')) return;
     trackPageView(location.pathname + location.search);
   }, [location]);
 

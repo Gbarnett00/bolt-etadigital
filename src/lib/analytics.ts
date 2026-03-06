@@ -34,8 +34,12 @@ export const initGA4 = () => {
     window.dataLayer.push(arguments);
   };
   window.gtag('js', new Date());
+  // send_page_view: false — trackPageView handles ALL page_view events.
+  // This prevents a duplicate page_view (one from config, one from trackPageView)
+  // and avoids the intermediate /?app-route=... URL polluting GA4 reports.
+  // page_location is still passed so GA4 has the correct session URL context.
   window.gtag('config', GA4_MEASUREMENT_ID, {
-    send_page_view: true,
+    send_page_view: false,
     page_location: initialUrl,
   });
 };
@@ -51,8 +55,11 @@ export const trackEvent = (
 
 export const trackPageView = (pagePath: string, pageTitle?: string) => {
   if (typeof window.gtag !== 'undefined') {
+    // page_location must be the full URL so GA4 can read UTM params for session attribution.
+    // window.location.href is evaluated NOW (synchronously), before GA4 processes the event async.
     window.gtag('event', 'page_view', {
       page_path: pagePath,
+      page_location: window.location.href,
       page_title: pageTitle || document.title,
     });
   }
