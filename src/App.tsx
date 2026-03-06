@@ -19,6 +19,9 @@ function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
+    // Skip the intermediate /?app-route=... URL — it's a redirect artifact, not a real page.
+    // The location useEffect will fire again with the clean URL after navigate() resolves.
+    if (location.search.includes('app-route=')) return;
     trackPageView(location.pathname + location.search);
   }, [location]);
 
@@ -31,6 +34,11 @@ function AppRoutes() {
       params.delete('app-route');
       const remainingParams = params.toString();
       const targetUrl = appRoute + (remainingParams ? '?' + remainingParams : '');
+      console.log('[UTM Debug] app-route detected');
+      console.log('[UTM Debug] navigating to:', targetUrl);
+      console.log('[UTM Debug] utm_source:', params.get('utm_source'));
+      console.log('[UTM Debug] utm_medium:', params.get('utm_medium'));
+      console.log('[UTM Debug] utm_campaign:', params.get('utm_campaign'));
       window.history.replaceState({}, '', targetUrl);
       navigate(targetUrl, { replace: true });
     }
