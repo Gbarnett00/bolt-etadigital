@@ -20,4 +20,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.env
+# .env intentionally tracked — all vars are VITE_ prefixed (public, baked into JS bundle at build time)
