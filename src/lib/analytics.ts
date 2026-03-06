@@ -23,6 +23,12 @@ export const initGA4 = () => {
   script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
   document.head.appendChild(script1);
 
+  // Capture the full URL right now, before React can change it.
+  // GA4 loads async so by the time it runs, the URL may already have
+  // been rewritten (e.g. /?app-route=/case-study → /case-study).
+  // Passing page_location explicitly locks in the original UTM params.
+  const initialUrl = window.location.href;
+
   window.dataLayer = window.dataLayer || [];
   window.gtag = function gtag() {
     window.dataLayer.push(arguments);
@@ -30,6 +36,7 @@ export const initGA4 = () => {
   window.gtag('js', new Date());
   window.gtag('config', GA4_MEASUREMENT_ID, {
     send_page_view: true,
+    page_location: initialUrl,
   });
 };
 
