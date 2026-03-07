@@ -60,7 +60,7 @@ export function UTMBuilder() {
   const isValid = campaignSlug.length > 0;
 
   const generatedUrl = isValid
-    ? `${BASE_URL}${page ? '/' + page : ''}?utm_source=linkedin&utm_medium=profile&utm_campaign=${campaignSlug}`
+    ? `${BASE_URL}${page ? '/' + page : ''}?utm_source=linkedin&utm_medium=posts&utm_campaign=${campaignSlug}`
     : '';
 
   const saveToHistory = (url: string) => {
