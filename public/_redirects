@@ -4,5 +4,12 @@
 /free-automations  /free-automations.html  200
 /quiz  /quiz.html  200
 
+# LinkedIn Featured section vanity URLs (UTM params baked into redirect)
+/linkedin-home             /linkedin-home.html             200
+/linkedin-quiz             /linkedin-quiz.html             200
+/linkedin-case-study       /linkedin-case-study.html       200
+/linkedin-free-guide       /linkedin-free-guide.html       200
+/linkedin-free-automations /linkedin-free-automations.html 200
+
 # SPA fallback - serve index.html for all other routes
 /*    /index.html   200
